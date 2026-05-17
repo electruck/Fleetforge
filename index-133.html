@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FleetForge — AI orchestrator for fleet electrification</title>
+<meta name="description" content="Bankable business cases for electric truck fleets, in days instead of months. Orchestrating between fleet operators, banks and grid operators.">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --white: #ffffff;
+    --ink: #0a1628;
+    --ink-2: #1e3a5f;
+    --ink-3: #4a6584;
+    --line: #d8d3c8;
+    --line-soft: #e8e4d8;
+    --green: #1e7a3c;
+    --green-bg: #e8f5ec;
+    --green-light: #b3e5c7;
+    --gold: #b8860b;
+    --gold-bg: #fef5e0;
+    --red: #b41e1e;
+    --red-bg: #fbeaea;
+    --accent: #1e4d6b;
+    --accent-dark: #0d2438;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', Menlo, Consolas, monospace;
+    --serif: 'Charter', 'Iowan Old Style', Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink); color: white;
+    padding: 12px 20px;
+  }
+  .nav-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px;
+  }
+  .nav-brand {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+    color: white;
+  }
+  .nav-brand span { color: var(--green-light); }
+  .nav-links {
+    display: flex; gap: 20px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: white; text-decoration: none; }
+  .nav-links a.cta {
+    background: var(--green); color: white;
+    padding: 6px 14px; border-radius: 3px;
+    font-weight: 700;
+  }
+  .nav-links a.cta:hover { background: #166632; }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    padding: 70px 0 60px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 52px; line-height: 1.05; margin: 0 0 22px;
+    color: var(--ink); letter-spacing: -0.025em;
+    max-width: 820px;
+  }
+  .hero-lede {
+    font-size: 20px; line-height: 1.5; color: var(--ink-2);
+    max-width: 760px; margin-bottom: 32px;
+  }
+  .hero-lede strong { color: var(--ink); }
+  .hero-actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--ink); color: white;
+    padding: 14px 28px; border-radius: 4px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.15s;
+  }
+  .btn:hover { background: var(--accent); border-color: var(--accent); text-decoration: none; }
+  .btn.primary { background: var(--green); border-color: var(--green); }
+  .btn.primary:hover { background: #166632; border-color: #166632; }
+  .btn.outline { background: transparent; color: var(--ink); }
+  .btn.outline:hover { background: var(--ink); color: white; }
+
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .hero-stat-value {
+    font-family: var(--serif);
+    font-size: 30px; font-weight: 700; color: var(--ink);
+    letter-spacing: -0.02em; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .hero-stat-value .small { font-size: 0.55em; color: var(--ink-3); font-weight: 400; }
+  .hero-stat-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700;
+  }
+
+  section { padding: 60px 0; border-bottom: 1px solid var(--line); }
+  .section-num {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.15em; color: var(--ink-3);
+    font-weight: 700; margin-bottom: 10px;
+  }
+  h2 {
+    font-family: var(--serif); font-size: 34px;
+    line-height: 1.15; margin: 0 0 18px; color: var(--ink);
+    letter-spacing: -0.02em;
+    max-width: 760px;
+  }
+  h3 { font-size: 16px; margin: 26px 0 10px; color: var(--ink); font-weight: 700; }
+  p { margin: 0 0 16px; color: var(--ink-2); }
+  p strong { color: var(--ink); }
+
+  .urgency {
+    background: linear-gradient(135deg, var(--red-bg) 0%, var(--gold-bg) 100%);
+    border-left: 3px solid var(--gold);
+    padding: 18px 22px; margin: 22px 0;
+    border-radius: 4px;
+  }
+  .urgency-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 4px;
+  }
+  .urgency p { margin: 0; font-size: 14px; color: var(--ink); }
+  .urgency strong { color: var(--ink); }
+
+  .problems-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin-top: 24px;
+  }
+  .problem {
+    background: white; padding: 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .problem-num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--red); font-weight: 700;
+    letter-spacing: 0.08em; margin-bottom: 8px;
+  }
+  .problem h3 { margin: 0 0 8px; font-size: 16px; }
+  .problem p { font-size: 13.5px; line-height: 1.6; margin: 0; }
+
+  .stack {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px; overflow: hidden;
+    margin: 28px 0;
+  }
+  .stack-layer {
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 110px 1fr 130px; gap: 22px;
+    align-items: center;
+  }
+  .stack-layer:last-child { border-bottom: none; }
+  .stack-num {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700;
+    line-height: 1.4;
+  }
+  .stack-name { font-weight: 700; font-size: 17px; color: var(--ink); margin-bottom: 4px; }
+  .stack-desc { color: var(--ink-2); font-size: 13.5px; line-height: 1.55; }
+  .stack-value {
+    text-align: right;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--ink-3); letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+  .stack-value strong { color: var(--green); font-weight: 700; font-size: 13px; display: block; }
+  .stack-layer.layer-ai { background: linear-gradient(to right, white, #f5f9fc); }
+  .stack-layer.layer-bank { background: linear-gradient(to right, white, var(--gold-bg)); }
+  .stack-layer.layer-fleet { background: linear-gradient(to right, white, var(--green-bg)); }
+  .stack-layer.layer-dso { background: linear-gradient(to right, white, #ddeefb); }
+  .stack-layer.layer-tso { background: linear-gradient(to right, white, #e8f0d8); }
+
+  .personas {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin: 24px 0;
+  }
+  .persona {
+    background: white; padding: 24px 22px;
+    border: 1px solid var(--line);
+    border-radius: 6px; border-top: 3px solid var(--accent);
+  }
+  .persona-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 8px;
+  }
+  .persona h3 { margin: 0 0 10px; font-size: 18px; }
+  .persona p { font-size: 13.5px; line-height: 1.55; margin: 0 0 14px; }
+  .persona ul {
+    margin: 0 0 18px; padding-left: 18px;
+    font-size: 13px; line-height: 1.6; color: var(--ink-2);
+  }
+  .persona ul li { margin-bottom: 4px; }
+  .persona .btn { display: block; text-align: center; padding: 11px 16px; font-size: 11px; }
+
+  .process {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin: 24px 0;
+  }
+  .step {
+    background: white; padding: 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    position: relative;
+  }
+  .step-num {
+    position: absolute; top: -10px; left: 20px;
+    background: var(--green); color: white;
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+  }
+  .step h3 { margin: 12px 0 8px; font-size: 15px; }
+  .step p { font-size: 13px; line-height: 1.55; margin: 0; }
+  .step-time {
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid var(--line-soft);
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700;
+  }
+
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin-top: 24px;
+  }
+  .trust-card {
+    background: white; padding: 22px 22px;
+    border: 1px solid var(--line); border-radius: 6px;
+    text-align: center;
+  }
+  .trust-num {
+    font-family: var(--serif); font-size: 32px;
+    font-weight: 700; color: var(--green);
+    letter-spacing: -0.02em; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .trust-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700; margin-bottom: 8px;
+  }
+  .trust-desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+  .demo-callout {
+    background: var(--accent-dark); color: white;
+    padding: 36px 32px; border-radius: 8px;
+    margin: 28px 0;
+    display: grid; grid-template-columns: 1fr auto; gap: 26px; align-items: center;
+  }
+  .demo-callout-tag {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--green-light); font-weight: 700; margin-bottom: 8px;
+  }
+  .demo-callout h3 {
+    font-family: var(--serif); font-size: 24px;
+    margin: 0 0 8px; color: white; letter-spacing: -0.01em;
+  }
+  .demo-callout p {
+    margin: 0; color: rgba(255,255,255,0.85);
+    font-size: 14.5px; line-height: 1.55;
+  }
+  .demo-callout .btn {
+    background: var(--green-light); color: var(--ink);
+    border-color: var(--green-light);
+    white-space: nowrap;
+  }
+  .demo-callout .btn:hover { background: white; border-color: white; }
+
+  .cta-final {
+    background: var(--ink); color: white;
+    padding: 56px 40px; border-radius: 8px;
+    margin: 40px 0 60px;
+    text-align: center;
+  }
+  .cta-final-label {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); font-weight: 700; margin-bottom: 14px;
+  }
+  .cta-final h2 {
+    font-family: var(--serif); font-size: 32px;
+    color: white; margin: 0 auto 16px;
+    letter-spacing: -0.02em; line-height: 1.2;
+    max-width: 620px;
+  }
+  .cta-final p {
+    margin: 0 auto 24px; max-width: 600px;
+    color: rgba(255,255,255,0.85);
+    font-size: 15px; line-height: 1.55;
+  }
+  .cta-final .actions {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+  .cta-final .btn { background: var(--green-light); color: var(--ink); border-color: var(--green-light); }
+  .cta-final .btn:hover { background: white; border-color: white; }
+  .cta-final .btn.outline { background: transparent; color: white; border-color: rgba(255,255,255,0.4); }
+  .cta-final .btn.outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
+
+  .foot {
+    padding: 36px 0 24px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+  .foot-grid {
+    max-width: 1000px; margin: 0 auto; padding: 0 20px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px;
+    margin-bottom: 24px;
+  }
+  .foot-col-title {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: white; font-weight: 700; margin-bottom: 12px;
+  }
+  .foot-col p, .foot-col a {
+    display: block; font-size: 13px;
+    margin-bottom: 6px; color: rgba(255,255,255,0.7);
+    text-decoration: none;
+  }
+  .foot-col a:hover { color: white; text-decoration: none; }
+  .foot-col .foot-brand {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+    color: white;
+  }
+  .foot-col .foot-brand span { color: var(--green-light); }
+  .foot-bottom {
+    max-width: 1000px; margin: 0 auto; padding: 16px 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; }
+    .nav-links { gap: 12px; font-size: 10px; }
+    .nav-links a:not(.cta) { display: none; }
+    .hero { padding: 40px 0 36px; }
+    .hero h1 { font-size: 32px; }
+    .hero-lede { font-size: 16px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hero-stat-value { font-size: 22px; }
+    section { padding: 36px 0; }
+    h2 { font-size: 24px; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .stack-layer { grid-template-columns: 1fr; gap: 10px; padding: 18px; }
+    .stack-value { text-align: left; }
+    .personas { grid-template-columns: 1fr; }
+    .process { grid-template-columns: 1fr 1fr; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .demo-callout { grid-template-columns: 1fr; padding: 24px 22px; }
+    .demo-callout .btn { width: 100%; text-align: center; }
+    .cta-final { padding: 36px 24px; }
+    .cta-final h2 { font-size: 22px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .foot-bottom { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Fleet<span>Forge</span></a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="demo.html">Demo</a>
+      <a href="careers.html">Careers</a>
+      <a href="#contact" class="cta">Request demo</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-tag">AI orchestrator · Transport electrification</div>
+    <h1>Bankable business cases for electric truck fleets, in days instead of months.</h1>
+    <p class="hero-lede">FleetForge connects <strong>fleet operators, banks and grid operators</strong> into one platform. We generate complete TCO analyses, ROI scenarios, grid-readiness checks and lease-ready financing proposals — automatically, per fleet, per route, per country. What a CFO spent 6-18 months on, our AI engine produces in days.</p>
+
+    <div class="hero-actions">
+      <a href="demo.html" class="btn primary">Try live demo →</a>
+      <a href="#contact" class="btn outline">Talk to us</a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-value">5</div>
+        <div class="hero-stat-label">Stakeholders connected</div>
+      </div>
+      <div>
+        <div class="hero-stat-value">€280<span class="small">B</span></div>
+        <div class="hero-stat-label">EU market potential</div>
+      </div>
+      <div>
+        <div class="hero-stat-value">10×</div>
+        <div class="hero-stat-label">Faster than manual TCO</div>
+      </div>
+      <div>
+        <div class="hero-stat-value">Aug<span class="small"> 2026</span></div>
+        <div class="hero-stat-label">EU toll hike deadline</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="problem">
+    <div class="section-num">01 · The problem</div>
+    <h2>Everyone wants to electrify. Nothing moves.</h2>
+    <p>The trucks exist. The banks have capital. The EU subsidies are budgeted. Grid operators want flexibility partners. But no single party connects these layers into one bankable deal per fleet. The result: a market frozen by coordination failure, not by technology.</p>
+
+    <div class="urgency">
+      <div class="urgency-label">Why now</div>
+      <p>From <strong>August 2026</strong>, Dutch and German road tolls rise sharply for diesel trucks while zero-emission trucks stay exempt until 2031. EU AFIR forces infrastructure rollout. The competitive window for early movers is 18-24 months.</p>
+    </div>
+
+    <div class="problems-grid">
+      <div class="problem">
+        <div class="problem-num">Problem 01</div>
+        <h3>Fleet CFOs are stuck</h3>
+        <p>6-18 months per investment decision on TCO analysis, sensitivity scenarios, financing comparison. No time for AI-truck specifics like battery degradation, residual value, charging strategy, grid congestion risk. Decisions are deferred or sub-optimal.</p>
+      </div>
+      <div class="problem">
+        <div class="problem-num">Problem 02</div>
+        <h3>Banks have no deal flow</h3>
+        <p>BNP Paribas Fortis Leasing, Belfius, ING Lease want green transport financing but lack TCO models, origination channels, and internal expertise on e-truck residual value, battery health, or charging infra risk. They watch from the sidelines.</p>
+      </div>
+      <div class="problem">
+        <div class="problem-num">Problem 03</div>
+        <h3>Grid operators are overrun</h3>
+        <p>Fluvius, Stedin, Liander, Elia, TenneT face 2-7 year waitlists for new heavy-duty grid connections. They need predictable flexibility partners — not thousands of individual fleet applications. Currently, that aggregator doesn't exist.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution">
+    <div class="section-num">02 · The solution</div>
+    <h2>Five layers. One platform. Continuous orchestration.</h2>
+    <p>FleetForge isn't a TCO tool — it's a network platform that connects every party in the electrification value chain. Each layer generates its own revenue. The real moat is the network effect between them.</p>
+
+    <div class="stack">
+      <div class="stack-layer layer-ai">
+        <div class="stack-num">Layer 1<br>Software</div>
+        <div>
+          <div class="stack-name">AI business-case engine</div>
+          <div class="stack-desc">For every fleet operator: TCO analysis, ROI scenarios, cashflow projections, EU subsidy inventory and grid-readiness check including depot charging strategy. What a sales engineer does in 40-80 hours, we do in minutes. Honest output, not promotional.</div>
+        </div>
+        <div class="stack-value">Revenue<strong>Subscription</strong></div>
+      </div>
+      <div class="stack-layer layer-bank">
+        <div class="stack-num">Layer 2<br>Banks</div>
+        <div>
+          <div class="stack-name">Bank-verified deal origination</div>
+          <div class="stack-desc">Exclusive partnerships with leading European banks verify numbers and sign leasing contracts for trucks, charging infrastructure and battery storage. Their stamp makes deals immediately bankable. Operator gets certainty, bank gets deal flow.</div>
+        </div>
+        <div class="stack-value">Revenue<strong>Origination fee</strong></div>
+      </div>
+      <div class="stack-layer layer-fleet">
+        <div class="stack-num">Layer 3<br>Lease revenue</div>
+        <div>
+          <div class="stack-name">Recurring revenue share on all assets</div>
+          <div class="stack-desc">Banks share 5-15% of lease margin with FleetForge over contract duration (7-10 years). Not just trucks: chargers, MCS stations, and battery parks are all in scope. Multi-year predictable revenue per closed deal.</div>
+        </div>
+        <div class="stack-value">Revenue<strong>Margin share × 7-10y</strong></div>
+      </div>
+      <div class="stack-layer layer-dso">
+        <div class="stack-num">Layer 4<br>Distribution (DSO)</div>
+        <div>
+          <div class="stack-name">Flex orchestration with regional grid operators</div>
+          <div class="stack-desc">Fluvius (BE), Stedin/Liander/Enexis (NL), ORES/RESA/Sibelga (BE). They control connection capacity and congestion management. We aggregate hundreds of charging points into predictable flexibility, with day-ahead forecasting. Shorter waitlists, lower expansion pressure.</div>
+        </div>
+        <div class="stack-value">Revenue<strong>Flex-share + priority</strong></div>
+      </div>
+      <div class="stack-layer layer-tso">
+        <div class="stack-num">Layer 5<br>Market (TSO + BRP)</div>
+        <div>
+          <div class="stack-name">Aggregator into transmission + energy market</div>
+          <div class="stack-desc">Elia (BE), TenneT (NL/DE). We operate as FSP (Flexibility Service Provider), selling truck-fleet flexibility as day-ahead arbitrage or intraday balancing. During wind surplus at night, charging becomes near-free — that margin we capture.</div>
+        </div>
+        <div class="stack-value">Revenue<strong>FSP fees + arbitrage</strong></div>
+      </div>
+    </div>
+
+    <div class="demo-callout">
+      <div>
+        <div class="demo-callout-tag">See it work</div>
+        <h3>An interactive sample case is live — try the parameters.</h3>
+        <p>Adjust fleet size, contract length, truck model, country, fuel price, power tariff, EU subsidy and annual mileage. Watch the entire business case recalculate. This is what FleetForge generates for real customers.</p>
+      </div>
+      <a href="demo.html" class="btn">Open demo →</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-num">03 · For who</div>
+    <h2>Three audiences. Aligned interests.</h2>
+    <p>We don't sell to one party at the cost of another. FleetForge only works if every stakeholder wins. Here is what we offer each.</p>
+
+    <div class="personas">
+      <div class="persona">
+        <div class="persona-label">Fleet operators</div>
+        <h3>Stop guessing. Get certainty.</h3>
+        <p>Replace your diesel fleet without CAPEX shock, without 18-month consultant assignments, without uncertain subsidy applications.</p>
+        <ul>
+          <li>Full TCO + ROI report in days</li>
+          <li>No CAPEX — bank-leased trucks and infra</li>
+          <li>Monthly cost below your current diesel TCO</li>
+          <li>Grid-readiness guaranteed by DSO partnership</li>
+          <li>EU subsidies applied automatically</li>
+        </ul>
+        <a href="#contact" class="btn primary">Request your case →</a>
+      </div>
+      <div class="persona">
+        <div class="persona-label">Banks / leasing arms</div>
+        <h3>5-10× more bankable deals.</h3>
+        <p>Tap into the heavy-duty electrification market with pre-validated cases, asset-backed leases and complete deal packages — no need to build a TCO team internally.</p>
+        <ul>
+          <li>Origination pipeline of pre-qualified deals</li>
+          <li>Asset-backed leases (trucks + infra + battery)</li>
+          <li>Complete subsidy + tax-deductibility analysis</li>
+          <li>Risk-shared via FleetForge co-investment</li>
+          <li>Co-branded customer materials</li>
+        </ul>
+        <a href="#contact" class="btn outline">Partner with us →</a>
+      </div>
+      <div class="persona">
+        <div class="persona-label">Grid operators (DSO/TSO)</div>
+        <h3>Aggregated flex, not random load.</h3>
+        <p>Get one coordinated partner who delivers predictable day-ahead flexibility from hundreds of truck depots — instead of fighting with thousands of individual applications.</p>
+        <ul>
+          <li>Day-ahead forecasting per region</li>
+          <li>Structured flexibility under Phase 1+2a</li>
+          <li>Automatic GTV-E compliance</li>
+          <li>Reduced expansion pressure</li>
+          <li>FSP-licensed counterparty</li>
+        </ul>
+        <a href="#contact" class="btn outline">Talk to us →</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-num">04 · How it works</div>
+    <h2>From first conversation to signed lease in weeks, not quarters.</h2>
+
+    <div class="process">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Discovery</h3>
+        <p>30-min call to capture your fleet profile: routes, mileage, depot locations, current TCO. We pull complementary data from public sources and your ERP if connected.</p>
+        <div class="step-time">Week 1</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>AI analysis</h3>
+        <p>Our engine generates a complete business case: per-truck TCO, ROI scenarios, cashflow timeline, EU subsidies, grid-readiness check, depot vs MCS strategy.</p>
+        <div class="step-time">Week 1-2</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Bank validation</h3>
+        <p>Partner bank reviews the numbers, confirms asset-backed leasing structure, prepares lease terms for trucks + infrastructure.</p>
+        <div class="step-time">Week 2-3</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Sign + roll out</h3>
+        <p>Lease contract signed. Truck delivery and infrastructure installation scheduled with DSO coordination. Subsidy applications submitted in parallel.</p>
+        <div class="step-time">Week 4+</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-num">05 · The market reality</div>
+    <h2>The numbers behind the urgency.</h2>
+    <p>This isn't speculation. The EU has committed, the regulations are passed, the funding is allocated. The only thing missing is the operational layer to make it bankable per fleet.</p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-num">750k</div>
+        <div class="trust-label">EU trucks to electrify by 2035</div>
+        <div class="trust-desc">30% of heavy-duty fleet, target set by EU CO2 standards for HDV.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-num">€3B+</div>
+        <div class="trust-label">EU subsidies unused</div>
+        <div class="trust-desc">AFIF, CEF-T, AFIR. Most fleet operators miss applications due to complexity.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-num">2-7y</div>
+        <div class="trust-label">Grid waitlist BE/NL</div>
+        <div class="trust-desc">Without flexibility coordination, no new heavy-duty connections until 2032-2035.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-num">€280B</div>
+        <div class="trust-label">Total addressable market</div>
+        <div class="trust-desc">CAPEX + lifetime services across the EU electrification transition.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-final" id="contact">
+    <div class="cta-final-label">Let's talk</div>
+    <h2>30-minute call to see if FleetForge fits your fleet, bank or grid region.</h2>
+    <p>No sales deck. We bring questions about your fleet (or bank, or DSO region), you bring honest answers. By the end of the call, we'll tell you whether we can help — and if yes, how. If no, we point you to who can.</p>
+    <div class="actions">
+      <a href="mailto:hello@fleetforge.eu?subject=Demo%20request" class="btn">hello@fleetforge.eu</a>
+      <a href="demo.html" class="btn outline">Try demo first</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="foot">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <div class="foot-brand">Fleet<span>Forge</span></div>
+      <p style="margin-top: 10px; max-width: 280px;">AI orchestrator for fleet electrification. Bankable business cases between fleet operators, banks and grid operators.</p>
+    </div>
+    <div class="foot-col">
+      <div class="foot-col-title">Product</div>
+      <a href="#solution">How it works</a>
+      <a href="demo.html">Live demo</a>
+      <a href="#contact">Request access</a>
+    </div>
+    <div class="foot-col">
+      <div class="foot-col-title">Company</div>
+      <a href="careers.html">Careers</a>
+      <a href="mailto:hello@fleetforge.eu">Contact</a>
+    </div>
+    <div class="foot-col">
+      <div class="foot-col-title">Region</div>
+      <p>Belgium (HQ)</p>
+      <p>Netherlands</p>
+      <p>EU expansion 2027</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>FleetForge BV · Belgium · © 2026 — all rights reserved</div>
+    <div>v1.0 · May 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

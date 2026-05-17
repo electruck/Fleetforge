@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Operations Lead — FleetForge careers</title>
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --white: #ffffff;
+    --ink: #0a1628;
+    --ink-2: #1e3a5f;
+    --ink-3: #4a6584;
+    --line: #d8d3c8;
+    --line-soft: #e8e4d8;
+    --green: #1e7a3c;
+    --green-bg: #e8f5ec;
+    --green-light: #b3e5c7;
+    --gold: #b8860b;
+    --gold-bg: #fef5e0;
+    --accent: #1e4d6b;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', Menlo, Consolas, monospace;
+    --serif: 'Charter', 'Iowan Old Style', Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  }
+
+  /* Top nav */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink); color: white;
+    padding: 12px 20px;
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-brand {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  }
+  .nav-brand span { color: var(--green-light); }
+  .nav-back {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.08em; color: rgba(255,255,255,0.6);
+    text-decoration: none;
+  }
+  .nav-back:hover { color: white; }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+  /* Hero */
+  .hero {
+    padding: 50px 0 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-breadcrumb {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 42px; line-height: 1.1; margin: 0 0 14px;
+    color: var(--ink); letter-spacing: -0.02em;
+  }
+  .hero-sub {
+    font-size: 18px; line-height: 1.55; color: var(--ink-2);
+    max-width: 640px; margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .hero-meta-label {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700; margin-bottom: 4px;
+  }
+  .hero-meta-value {
+    font-size: 15px; font-weight: 700; color: var(--ink);
+  }
+  .hero-meta-value.green { color: var(--green); }
+
+  .apply-cta-top {
+    display: inline-block;
+    background: var(--ink); color: white;
+    padding: 13px 26px;
+    border-radius: 4px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none;
+    margin-right: 8px;
+    transition: background 0.15s;
+  }
+  .apply-cta-top:hover { background: var(--accent); }
+  .apply-cta-top.green { background: var(--green); color: white; }
+  .apply-cta-top.green:hover { background: #166632; }
+  .apply-cta-top.outline {
+    background: transparent; border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .apply-cta-top.outline:hover { background: var(--ink); color: white; }
+
+  /* Demo callout */
+  .demo-callout {
+    background: var(--gold-bg);
+    border: 1px solid var(--gold);
+    border-left: 3px solid var(--gold);
+    padding: 18px 22px; margin: 22px 0;
+    border-radius: 4px;
+    display: flex; justify-content: space-between; align-items: center; gap: 18px;
+  }
+  .demo-callout-content { flex: 1; }
+  .demo-callout-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 4px;
+  }
+  .demo-callout-text {
+    font-size: 14px; color: var(--ink); margin: 0;
+  }
+  .demo-callout-text strong { color: var(--ink); }
+  .demo-callout-link {
+    background: var(--ink); color: white;
+    padding: 11px 20px; border-radius: 4px;
+    font-family: var(--mono); font-size: 11px;
+    font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    white-space: nowrap; flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .demo-callout-link:hover { background: var(--accent); }
+
+  /* Sections */
+  section { padding: 36px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .section-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.15em; color: var(--ink-3);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  h2 {
+    font-family: var(--serif); font-size: 26px;
+    line-height: 1.2; margin: 0 0 14px; color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: var(--ink); font-weight: 700; }
+  p { margin: 0 0 14px; color: var(--ink-2); }
+  p strong { color: var(--ink); }
+  a { color: var(--accent); }
+
+  /* Responsibilities */
+  .resp-list { list-style: none; padding: 0; margin: 18px 0; }
+  .resp-list li {
+    background: white; border: 1px solid var(--line);
+    padding: 14px 18px; margin-bottom: 8px;
+    border-radius: 4px; border-left: 3px solid var(--accent);
+    display: flex; gap: 14px;
+  }
+  .resp-icon {
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: var(--accent); flex-shrink: 0; width: 32px;
+  }
+  .resp-content { flex: 1; }
+  .resp-content strong { color: var(--ink); display: block; margin-bottom: 4px; }
+  .resp-content p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+
+  /* Stack */
+  .stack-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    margin: 16px 0;
+  }
+  .stack-card {
+    background: white; padding: 14px 16px;
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  .stack-card-name {
+    font-weight: 700; font-size: 13.5px; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .stack-card-desc { font-size: 12.5px; color: var(--ink-3); line-height: 1.55; }
+  .stack-card-tag {
+    display: inline-block; font-family: var(--mono);
+    font-size: 9px; letter-spacing: 0.06em; padding: 2px 7px;
+    border-radius: 3px; background: var(--gold-bg); color: var(--gold);
+    text-transform: uppercase; font-weight: 700; margin-right: 6px;
+  }
+  .stack-card-tag.must { background: var(--green-bg); color: var(--green); }
+  .stack-card-tag.nice { background: #f0e6fa; color: #663399; }
+
+  /* Profile */
+  .profile-block {
+    background: white; padding: 22px 24px;
+    border: 1px solid var(--line); border-radius: 6px;
+    margin: 18px 0;
+  }
+  .profile-row {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid; grid-template-columns: 100px 1fr; gap: 16px;
+    align-items: baseline;
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .profile-row strong {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700;
+  }
+  .profile-row span { font-size: 13.5px; color: var(--ink-2); }
+
+  /* Comp table */
+  table.comp {
+    width: 100%; border-collapse: collapse; background: white;
+    border: 1px solid var(--line); margin: 14px 0;
+  }
+  table.comp th, table.comp td {
+    padding: 11px 14px; border: 1px solid var(--line-soft);
+    text-align: left; font-size: 13.5px;
+  }
+  table.comp thead th {
+    background: #f7f5f0; font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 700;
+  }
+  table.comp td.amt {
+    text-align: right; font-weight: 700; color: var(--green);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin: 18px 0;
+  }
+  .about-card {
+    background: white; padding: 14px 16px;
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  .about-card-stat {
+    font-size: 22px; font-weight: 700; color: var(--green);
+    margin-bottom: 4px; letter-spacing: -0.01em;
+  }
+  .about-card-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700;
+  }
+  .about-card-desc { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.5; }
+
+  /* Process */
+  .process {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; margin: 18px 0;
+  }
+  .process-step {
+    background: white; padding: 14px 16px;
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  .process-step-num {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; color: var(--accent);
+    font-weight: 700; margin-bottom: 6px;
+  }
+  .process-step-title { font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+  .process-step-detail { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+
+  /* CTA */
+  .cta {
+    background: var(--ink); color: white;
+    padding: 36px 30px; border-radius: 6px;
+    margin: 30px 0 50px;
+  }
+  .cta-label {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 12px;
+  }
+  .cta-headline {
+    font-family: var(--serif); font-size: 26px;
+    line-height: 1.25; margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .cta-body {
+    font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.85);
+    margin-bottom: 22px;
+  }
+  .cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-btn {
+    background: var(--green-light); color: var(--ink);
+    padding: 13px 24px; border-radius: 4px;
+    font-family: var(--mono); font-size: 12px;
+    font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .cta-btn:hover { background: white; }
+  .cta-btn.outline {
+    background: transparent; color: white;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .cta-btn.outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
+
+  .foot {
+    padding: 20px 0; font-size: 12px; color: var(--ink-3);
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { font-size: 14px; }
+    .hero { padding: 32px 0 24px; }
+    .hero h1 { font-size: 28px; }
+    .hero-sub { font-size: 15px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hero-meta-value { font-size: 13.5px; }
+    .apply-cta-top { display: block; margin: 0 0 8px; text-align: center; }
+    section { padding: 26px 0; }
+    h2 { font-size: 20px; }
+    .stack-grid { grid-template-columns: 1fr; }
+    .profile-row { grid-template-columns: 1fr; gap: 4px; }
+    .process { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .resp-list li { gap: 10px; }
+    .resp-icon { width: 24px; font-size: 11px; }
+    .demo-callout { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .demo-callout-link { width: 100%; text-align: center; }
+    .cta-headline { font-size: 19px; }
+    .cta-actions { flex-direction: column; }
+    .cta-btn { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand" style="text-decoration: none;">Fleet<span>Forge</span> · careers</a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-breadcrumb">Engineering & operations · opening #001</div>
+    <h1>AI Operations Lead</h1>
+    <p class="hero-sub">Help us build the AI agents that unlock European transport electrification. First technical hire after the founder. You'll work hands-on with Claude, GPT-5, Gemini and modern agent frameworks to generate bankable business cases for fleet operators, banks and grid operators.</p>
+
+    <div>
+      <a href="#apply" class="apply-cta-top green">Apply now →</a>
+      <a href="demo.html" class="apply-cta-top outline">See live demo</a>
+    </div>
+
+    <div class="hero-meta">
+      <div>
+        <div class="hero-meta-label">Location</div>
+        <div class="hero-meta-value">Hybrid · BE / NL</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Contract</div>
+        <div class="hero-meta-value">Full-time · permanent</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Gross salary</div>
+        <div class="hero-meta-value green">€45-65k / year</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Equity (ESOP)</div>
+        <div class="hero-meta-value green">0.5 - 1.5%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO CALLOUT -->
+  <div class="demo-callout">
+    <div class="demo-callout-content">
+      <div class="demo-callout-label">Before you apply — see what we build</div>
+      <p class="demo-callout-text"><strong>You'll be working on this kind of output every day.</strong> Take 2 minutes to play with our interactive business-case generator. Move the sliders, change the fleet size, watch the tables recalculate. This is what FleetForge produces for any European fleet operator in minutes instead of months.</p>
+    </div>
+    <a href="demo.html" class="demo-callout-link">View demo →</a>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <section>
+    <div class="section-label">About FleetForge</div>
+    <h2>We orchestrate transport electrification between fleet operators, banks and grid operators.</h2>
+    <p>FleetForge builds AI software that generates a complete bankable business case for any European fleet operator's transition from diesel to electric trucks — in days instead of the 6-18 months it traditionally takes. Our software integrates TCO analysis, ROI scenarios, grid congestion data from Fluvius/Stedin/Elia, EU subsidies, bank leasing options and SSTPA parking strategy into a single deliverable.</p>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-stat">Anchor customer</div>
+        <div class="about-card-label">First pilot 2026</div>
+        <div class="about-card-desc">A leading Belgian heavy-duty fleet operator launches our first 80-truck pilot.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-stat">€280B</div>
+        <div class="about-card-label">EU market</div>
+        <div class="about-card-desc">750,000 trucks must electrify by 2035. Our TAM grows with the transition.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-stat">Seed stage</div>
+        <div class="about-card-label">€750k round 2026</div>
+        <div class="about-card-desc">Pre-seed company with strong founder profile, warm intros and validated demo. You'd be an early employee.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ROLE -->
+  <section>
+    <div class="section-label">The role</div>
+    <h2>What does an AI Operations Lead do at FleetForge?</h2>
+    <p>You are the human intelligence on top of our AI engine. Our software generates business cases via LLMs, but every output needs to be accurate, consistent and tailored to customer feedback. You manage that production chain — from prompt design to output validation to continuous improvement.</p>
+
+    <h3>Concrete responsibilities</h3>
+    <ol class="resp-list">
+      <li>
+        <div class="resp-icon">01</div>
+        <div class="resp-content">
+          <strong>Design and maintain AI workflows</strong>
+          <p>Build and maintain agent flows in n8n, LangGraph or Make for TCO analyses, cashflow projections, EU subsidy applications and leasing proposals. Iteratively improve based on customer output.</p>
+        </div>
+      </li>
+      <li>
+        <div class="resp-icon">02</div>
+        <div class="resp-content">
+          <strong>Develop and version-control prompts</strong>
+          <p>Write, test and optimize prompts for Claude, GPT-5, Gemini. Document what works and what doesn't. Maintain a prompt library with Git-style version control.</p>
+        </div>
+      </li>
+      <li>
+        <div class="resp-icon">03</div>
+        <div class="resp-content">
+          <strong>Guarantee output quality (human-in-the-loop)</strong>
+          <p>Every generated business case is reviewed by you for consistency, accuracy and customer fit. You are the last human link before a quote reaches a transport CFO.</p>
+        </div>
+      </li>
+      <li>
+        <div class="resp-icon">04</div>
+        <div class="resp-content">
+          <strong>Integrate data from external sources</strong>
+          <p>Connect our AI to Odoo (ERP data), grid operator APIs (capacity per region), VLAIO/AFIF subsidy databases, Milence/Fastned charging tariffs, EU SSTPA registry. MCP, API connections, webhooks.</p>
+        </div>
+      </li>
+      <li>
+        <div class="resp-icon">05</div>
+        <div class="resp-content">
+          <strong>Documentation and internal tools</strong>
+          <p>Maintain a knowledge base on Belgian/Dutch transport regulation, grid operator procedures, EU subsidies. Build internal tools that speed up the work of the founder and yourself.</p>
+        </div>
+      </li>
+      <li>
+        <div class="resp-icon">06</div>
+        <div class="resp-content">
+          <strong>Evaluate models and tools</strong>
+          <p>The AI stack changes weekly. Test new models (Claude Opus 4.7, GPT-5, Gemini 2.5, open-source alternatives), new tools (Cursor, Replit Agent, MCP servers). Decide what we adopt.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- THE STACK -->
+  <section>
+    <div class="section-label">The tech stack</div>
+    <h2>What tools will you work with?</h2>
+    <p>We work with the most modern AI stack and stay flexible about technology. What works today may be obsolete tomorrow — we adapt continuously. You don't need to know everything before you start; we expect you to learn.</p>
+
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-card-name">Claude API (Anthropic)</div>
+        <div class="stack-card-desc"><span class="stack-card-tag must">Must</span>Our primary LLM for complex financial analyses. The demo proves the power.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">OpenAI GPT-5 + Gemini 2.5</div>
+        <div class="stack-card-desc"><span class="stack-card-tag must">Must</span>Used for specific tasks (vision, fast inference, benchmarking).</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">n8n / Make / LangGraph</div>
+        <div class="stack-card-desc"><span class="stack-card-tag must">Must</span>Workflow orchestration for agent flows. Start with n8n, scale to LangGraph when code flexibility is needed.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">Python (basics)</div>
+        <div class="stack-card-desc"><span class="stack-card-tag must">Must</span>For data pipelines, API integrations, custom logic outside n8n. No senior developer level required.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">Cursor / Claude Code</div>
+        <div class="stack-card-desc"><span class="stack-card-tag must">Must</span>AI-driven development. We write 80% of our code with AI assistance.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">MCP (Model Context Protocol)</div>
+        <div class="stack-card-desc"><span class="stack-card-tag nice">Nice</span>For AI tool integration with external systems. We adopt MCP servers where possible.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">Odoo</div>
+        <div class="stack-card-desc"><span class="stack-card-tag nice">Nice</span>ERP system used by many European fleet operators. Integration via API/webhooks.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">PostgreSQL / Supabase</div>
+        <div class="stack-card-desc"><span class="stack-card-tag nice">Nice</span>For data storage, customer cases, prompt versions. Basic SQL is enough.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">Notion / Linear</div>
+        <div class="stack-card-desc"><span class="stack-card-tag nice">Nice</span>Documentation and task management. We use simple tools, no overkill.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-name">GitHub + Vercel</div>
+        <div class="stack-card-desc"><span class="stack-card-tag nice">Nice</span>Code versioning and deployment. You don't need to be a DevOps expert but should be comfortable with basics.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section>
+    <div class="section-label">Who we're looking for</div>
+    <h2>The profile — curiosity counts more than years of experience.</h2>
+    <p>We're looking for someone who loves learning and experimenting with AI — not necessarily someone with 5 years of AI experience. In a seed-stage startup, you learn faster by doing than by waiting.</p>
+
+    <div class="profile-block">
+      <div class="profile-row">
+        <strong>Must</strong>
+        <span>Curious and self-driven. You read documentation, try tools, fail, learn. You don't wait for a mentor to spoon-feed you.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Must</strong>
+        <span>Comfortable with technical tools (no developer level required). You've worked with AI chatbots and want to go further.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Must</strong>
+        <span>Detail-oriented. You spot errors in financial tables. You check AI output critically, not blindly.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Must</strong>
+        <span>Strong written English. Our tech documentation is English. Dutch is a plus (customers are BE/NL) but not required.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Nice</strong>
+        <span>Experience with AI agents, workflow tools or automation. A completed course counts.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Nice</strong>
+        <span>Knowledge of logistics or the transport sector. Not required — we'll teach you.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Nice</strong>
+        <span>Basic Python or willing to learn in the first 3 months.</span>
+      </div>
+      <div class="profile-row">
+        <strong>Bonus</strong>
+        <span>Your own experiments with Claude, GPT, Gemini — a project, blog, GitHub repo or course work. Send it along.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPENSATION -->
+  <section>
+    <div class="section-label">Compensation</div>
+    <h2>Gross salary, equity and growth potential.</h2>
+    <p>We are pre-seed but offer fair compensation. The salary range is based on the Belgian market, not on the startup standard of "we pay you with passion".</p>
+
+    <table class="comp">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Detail</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gross salary</td>
+          <td>Depending on experience and domain knowledge</td>
+          <td class="amt">€45-65k / year</td>
+        </tr>
+        <tr>
+          <td>Equity via ESOP</td>
+          <td>4-year vesting with 1-year cliff. Standard Belgian option plan.</td>
+          <td class="amt">0.5 - 1.5%</td>
+        </tr>
+        <tr>
+          <td>Hardware</td>
+          <td>MacBook Pro or equivalent + extra screen + home office setup</td>
+          <td class="amt">€2.5-3k budget</td>
+        </tr>
+        <tr>
+          <td>AI credits + tools</td>
+          <td>Unlimited access to Claude Pro, ChatGPT Plus, Cursor, Gemini Advanced</td>
+          <td class="amt">~€1k / year</td>
+        </tr>
+        <tr>
+          <td>Learning budget</td>
+          <td>Books, online courses, conferences (AI events, sector conferences)</td>
+          <td class="amt">€1.5k / year</td>
+        </tr>
+        <tr>
+          <td>Holidays</td>
+          <td>Standard 20 + 12 ADV days + flexible recovery</td>
+          <td class="amt">32 days</td>
+        </tr>
+        <tr>
+          <td>Pension / health insurance</td>
+          <td>Group insurance at DKV or equivalent (from month 6)</td>
+          <td class="amt">Standard BE</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What equity in a seed startup means</h3>
+    <p>Equity is potentially large upside with substantial risk. At a successful Series A in 2027 (€3-7M at FleetForge €15-30M valuation), 1% equity would be worth €150-300k on paper. At an eventual exit (5-7 years later), this can be multiples — or zero if the company fails. We're honest: 70% of seed startups don't reach Series A. But if you join early and the company works, you get real financial upside.</p>
+  </section>
+
+  <!-- WORKING WITH US -->
+  <section>
+    <div class="section-label">How we work</div>
+    <h2>What does a typical week look like?</h2>
+
+    <h3>Culture</h3>
+    <p>Small team in seed stage means: lots of freedom, lots of responsibility, fast feedback loops. You have direct access to the founder and all decisions. No meetings to schedule a meeting. We value written communication over verbal (Slack, Notion, Linear) so async work works.</p>
+
+    <h3>A typical week</h3>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+      <li><strong>Monday morning:</strong> 30-min sync on weekly goals (everything you plan to do shared async the night before)</li>
+      <li><strong>Through the week:</strong> Build/improve AI workflows, review customer cases, test prompts, integrate external APIs</li>
+      <li><strong>1-2 deep-work blocks:</strong> 4-hour uninterrupted sessions for complex work (designing a new agent, building an MCP server)</li>
+      <li><strong>Friday afternoon:</strong> "Friday Lab" — free time to discover new AI tools, run experiments, learn about a topic</li>
+      <li><strong>Travel:</strong> 2-4 times per quarter to a customer or partner (bank, grid operator). No more.</li>
+    </ul>
+
+    <h3>Working with the founder</h3>
+    <p>The founder has a unique combination of transport logistics (Master + Applied Economics), operational credibility (CE truck license + container experience), logistics IT (Katoen Natie), EV energy (SolarEdge), truck pre-sales (Iveco). He has warm intros at our anchor customer through family. You'll work directly with him, not through layers of managers — which is both an advantage and a disadvantage (intense, no filter).</p>
+  </section>
+
+  <!-- PROCESS -->
+  <section>
+    <div class="section-label">Application process</div>
+    <h2>How it works.</h2>
+    <p>We keep it short. We don't want to make you wait 6 weeks. From first contact to offer, max 2-3 weeks.</p>
+
+    <div class="process">
+      <div class="process-step">
+        <div class="process-step-num">Step 1</div>
+        <div class="process-step-title">Send short message</div>
+        <div class="process-step-detail">No long letter. Tell us: your background in 3 sentences, one AI experiment you did, and why this role interests you. CV optional.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">Step 2</div>
+        <div class="process-step-title">30-min intake call</div>
+        <div class="process-step-detail">Video call with the founder. No technical test, just a conversation about expectations on both sides.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">Step 3</div>
+        <div class="process-step-title">Paid mini-assignment (1-2h)</div>
+        <div class="process-step-detail">Paid trial: build a small AI workflow for a real FleetForge scenario. You get €100 regardless of outcome.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">Step 4</div>
+        <div class="process-step-title">Offer + start</div>
+        <div class="process-step-detail">Within 5 business days after the mini-assignment: offer or clear "no". No ghost culture.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="cta" id="apply">
+    <div class="cta-label">Ready to help build this?</div>
+    <div class="cta-headline">Send us a short, honest message.</div>
+    <div class="cta-body">Email is preferred, but LinkedIn or WhatsApp work too. We respond within 48 hours. No forms, no ATS systems, no automated rejections. Before you write, take 2 minutes to try the <a href="demo.html" style="color: var(--green-light); text-decoration: underline;">live demo</a> — it'll give you a feel for the kind of work you'd be doing.</div>
+    <div class="cta-actions">
+      <a href="mailto:hello@fleetforge.eu?subject=AI%20Operations%20Lead%20%23001" class="cta-btn">hello@fleetforge.eu</a>
+      <a href="#" class="cta-btn outline">LinkedIn DM</a>
+      <a href="#" class="cta-btn outline">WhatsApp +32 ...</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    FleetForge BV · Belgium · Opening #001 · Published May 2026<br>
+    Equal opportunity employer. We look for talent, not checkboxes.
+  </div>
+
+</div>
+
+</body>
+</html>
